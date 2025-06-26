@@ -118,7 +118,7 @@ sheets = ef.sheet_names
 ef.close()
 col_selected = 0
 row_start = 0
-df = pd.read_excel("renu.xlsx",sheet_name=sheets[0]) #first sheet for preview 
+df = pd.read_excel(file,sheet_name=sheets[0]) #first sheet for preview 
 OneByOne = input(f"{bcolors.BOLD+bcolors.OKGREEN}file load successfull! {bcolors.ENDC} \n\n{bcolors.OKBLUE}enter to continue {bcolors.WARNING}or{bcolors.OKCYAN} press y for One-by-One mode{bcolors.ENDC} : ")
 if OneByOne=="":
     # Selection of row and column
@@ -136,7 +136,7 @@ if OneByOne=="":
     ## Selection done
 
     for i in sheets:
-        df = pd.read_excel("renu.xlsx",sheet_name=i)
+        df = pd.read_excel(file,sheet_name=i)
         Question_list = df[col_selected][row_start:].dropna().tolist()
         create_questionnaire(Question_list,option_list,i)
 elif OneByOne == "about":
@@ -149,7 +149,7 @@ else:
             print(f"{bcolors.BOLD+bcolors.FAIL} -X-  No Column Selected  -X- {bcolors.ENDC}")
             exit()
         row_start = SelectRow(df,col_selected)
-        df = pd.read_excel("renu.xlsx",sheet_name=i)
+        df = pd.read_excel(file,sheet_name=i)
         clear()
         print(f"{bcolors.OKBLUE} Selected column is - {bcolors.ENDC}{col_selected}")
         print(f"{bcolors.OKBLUE} Selected row index is - {bcolors.ENDC}{row_start}\n")
