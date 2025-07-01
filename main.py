@@ -3,7 +3,6 @@ from docx import Document
 import sys
 from docx.shared import Inches
 import os
-from time import sleep
 from tkinter import filedialog
 
 class bcolors:
