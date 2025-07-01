@@ -40,7 +40,10 @@ def SelectRow(df,col):
     print(df[col])
     while 1:
         print()
-        ans = int(input(f"{bcolors.BOLD}{bcolors.OKBLUE}Enter the index of row ({bcolors.FAIL}press -1 to exit{bcolors.OKBLUE}) : {bcolors.ENDC}"))
+        try:
+            ans = int(input(f"{bcolors.BOLD}{bcolors.OKBLUE}Enter the index of row ({bcolors.FAIL}press -1 or enter to exit{bcolors.OKBLUE}) : {bcolors.ENDC}"))
+        except:
+            return 0
         if ans in  range(len(df[col])):
             return ans
         if ans  == -1:
@@ -86,8 +89,9 @@ def SelectOptions():
         if ans in range(len(options_list.keys())):
             clear()
             print(f"{bcolors.BOLD} {bcolors.OKBLUE} {bcolors.UNDERLINE}Selected option will look like this : {bcolors.ENDC}\n")
+            print("Q1. Question from excel sheet ?")
             for option in options_list[lis[ans][1]]:
-                print(f" ◉ {option}")
+                print(f"  ◉ {option}")
             print()
             if "y"==input(f"{bcolors.BOLD+bcolors.OKGREEN} Press y for final select {bcolors.ENDC} and {bcolors.BOLD+bcolors.OKBLUE} Enter to restart {bcolors.ENDC} : "):
                 return options_list[lis[ans][1]]
@@ -103,6 +107,7 @@ if len(sys.argv) > 1:
     file = sys.argv[1]
 else:
     file = filedialog.askopenfilename()
+# check for file path
 if file=="":
     print(f"{bcolors.BOLD+bcolors.FAIL} -X-  No file path was provided  -X- {bcolors.ENDC}")
     exit()
@@ -110,7 +115,7 @@ try:
     os.mkdir("word_files")
 except:
     print(f"{bcolors.WARNING} word_files alraedy exits {bcolors.BOLD}(might cause over writes){bcolors.ENDC}\n")
-    sleep(2)
+    
 # reading excel file
 print(f"{bcolors.BOLD+bcolors.OKBLUE}Loading file ... {bcolors.ENDC}")
 ef = pd.ExcelFile(file)
@@ -120,6 +125,7 @@ col_selected = 0
 row_start = 0
 df = pd.read_excel(file,sheet_name=sheets[0]) #first sheet for preview 
 OneByOne = input(f"{bcolors.BOLD+bcolors.OKGREEN}file load successfull! {bcolors.ENDC} \n\n{bcolors.OKBLUE}enter to continue {bcolors.WARNING}or{bcolors.OKCYAN} press y for One-by-One mode{bcolors.ENDC} : ")
+
 if OneByOne=="":
     # Selection of row and column
     col_selected = SelectCol(df)
